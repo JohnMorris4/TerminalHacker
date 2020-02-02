@@ -7,6 +7,9 @@ public class Hacker : MonoBehaviour
     // Start is called before the first frame update
     //Game State
     int _level;
+    enum Screen { MainMenu, Password, Win }
+    
+    Screen _currentScreen = Screen.MainMenu;
     void Start()
     {
        
@@ -33,9 +36,21 @@ public class Hacker : MonoBehaviour
 
         if (input == "menu")
         {
+            _currentScreen = Screen.MainMenu;
             ShowMainMenu();
+        } 
+        else if(_currentScreen == Screen.MainMenu)
+
+        {
+            RunMainMenu(input);
         }
-        else if (input == "1")
+            
+        
+    }
+
+    void RunMainMenu(string input)
+    {
+        if (input == "1")
         {
             _level = 1;
             StartGame();
@@ -50,22 +65,25 @@ public class Hacker : MonoBehaviour
             _level = 3;
             StartGame();
         }
-        else if (input == "cia" )
+        else if (input == "cia")
         {
             Terminal.ClearScreen();
             Terminal.WriteLine("+++");
             Terminal.WriteLine("Please choose a level Mr Spy");
+            _currentScreen = Screen.MainMenu;
         }
         else
         {
             Terminal.WriteLine("Please choose a correct level");
+            _currentScreen = Screen.MainMenu;
         }
-        
-        
     }
+
 
     void StartGame()
     {
+        _currentScreen = Screen.Password;
         Terminal.WriteLine($"You have chosen level {_level}");
+        Terminal.WriteLine("Please enter your password");
     }
 }
